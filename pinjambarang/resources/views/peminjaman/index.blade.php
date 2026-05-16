@@ -10,9 +10,8 @@
             <thead>
                 <tr class="border-b border-gray-200 bg-gray-50">
                     <th class="p-3">Peminjam</th>
-                    <th class="p-3">Barang</th>
-                    <th class="p-3">Tgl Pinjam</th>
-                    <th class="p-3">Tgl Kembali</th>
+                    <th class="p-3">Tanggal Pinjam</th>
+                    <th class="p-3">Tanggal Kembali</th>
                     <th class="p-3">Keperluan</th>
                     <th class="p-3">Status</th>
                     @if($user->role === 'admin')
