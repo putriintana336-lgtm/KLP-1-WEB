@@ -1,14 +1,59 @@
 <x-layout>
-    <div class="max-w-sm mx-auto mt-20 bg-white p-8 border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold mb-6 text-center">Login Sistem</h2>
-        <form action="/login" method="POST" class="flex flex-col gap-4">
-            @csrf
-            <input type="text" name="username" placeholder="Username" required class="border border-gray-300 p-2 text-sm focus:outline-none focus:border-blue-500">
-            <input type="password" name="password" placeholder="Password" required class="border border-gray-300 p-2 text-sm focus:outline-none focus:border-blue-500">
-            <button type="submit" class="bg-blue-600 text-white p-2 text-sm hover:bg-blue-700">Login</button>
-        </form>
-        <div class="mt-4 text-center text-sm">
-            <a href="/register" class="text-blue-600">Register Akun Baru</a>
+    <div class="min-h-screen flex items-center justify-center bg-slate-100 px-4">
+
+        <div class="w-full max-w-md bg-white rounded-2xl p-8 shadow-sm">
+
+            {{-- Heading --}}
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800">
+                    Login
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-2">
+                    Silakan masuk ke sistem
+                </p>
+            </div>
+
+            {{-- Form --}}
+            <form action="/login" method="POST" class="space-y-4">
+                @csrf
+
+                <div>
+                    <input 
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        required
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    >
+                </div>
+
+                <div>
+                    <input 
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    >
+                </div>
+
+                <button 
+                    type="submit"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl text-sm font-medium transition"
+                >
+                    Masuk
+                </button>
+            </form>
+
+            {{-- Footer --}}
+            <div class="mt-6 text-center">
+                <a href="/register" class="text-sm text-blue-500 hover:text-blue-600">
+                    Buat akun baru
+                </a>
+            </div>
+
         </div>
+
     </div>
 </x-layout>
