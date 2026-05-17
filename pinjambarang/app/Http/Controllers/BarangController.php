@@ -23,13 +23,14 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        // PERBAIKAN: Petakan secara manual agar input HTML 'kode_barang' masuk ke kolom database 'kode'
+        // Simpan data dengan nama kolom yang sesuai database
         Barang::create([
-            'kode'        => $request->kode_barang, // Menghubungkan input form ke kolom 'kode' di DB
-            'nama_barang' => $request->nama_barang,
+            'kode'        => $request->kode,
+            'nama'        => $request->nama,
             'kategori_id' => $request->kategori_id,
-            'jumlah'      => $request->jumlah,
-            'status'      => $request->status,
+            'stok'        => $request->stok,
+            'kondisi'     => $request->kondisi,
+            'deskripsi'   => $request->deskripsi,
         ]);
 
         return redirect('/barang');
@@ -46,13 +47,13 @@ class BarangController extends Controller
     {
         $barang = Barang::find($id);
         
-        // PERBAIKAN: Lakukan hal yang sama pada fungsi update agar saat diedit tidak eror
         $barang->update([
-            'kode'        => $request->kode_barang,
-            'nama_barang' => $request->nama_barang,
+            'kode'        => $request->kode,
+            'nama'        => $request->nama,
             'kategori_id' => $request->kategori_id,
-            'jumlah'      => $request->jumlah,
-            'status'      => $request->status,
+            'stok'        => $request->stok,
+            'kondisi'     => $request->kondisi,
+            'deskripsi'   => $request->deskripsi,
         ]);
 
         return redirect('/barang');
