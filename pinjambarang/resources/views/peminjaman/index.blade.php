@@ -26,18 +26,20 @@
             <tbody class="divide-y divide-gray-200 text-gray-700">
                 @foreach($peminjamans as $p)
                 <tr class="hover:bg-gray-50 transition-colors">
-                    <td class="p-3.5 font-medium text-gray-900">{{ $p->user->name }}</td>
-                    <td class="p-3.5">{{ $p->barang->nama_barang }}</td>
-                    <td class="p-3.5">{{ $p->tanggal_pinjam }}</td>
-                    <td class="p-3.5">{{ $p->tanggal_kembali }}</td>
-                    <td class="p-3.5">{{ $p->keperluan }}</td>
+                    <td class="p-3.5 font-medium text-gray-900">{{ $p->user->name ?? 'User' }}</td>
+                    
+                    <td class="p-3.5">{{ $p->barang->nama ?? 'Barang Terhapus' }}</td>
+                    <td class="p-3.5">{{ $p->tgl_pinjam }}</td>
+                    <td class="p-3.5">{{ $p->tgl_kembali_rencana }}</td>
+                    <td class="p-3.5">{{ $p->catatan ?? '-' }}</td>
+                    
                     <td class="p-3.5">
                         @if($p->status === 'disetujui' || $p->status === 'dikembalikan')
-                            <span class="text-green-600 font-medium font-semibold">{{ $p->status }}</span>
+                            <span class="text-green-600 font-semibold">{{ $p->status }}</span>
                         @elseif($p->status === 'ditolak')
-                            <span class="text-red-600 font-medium font-semibold">{{ $p->status }}</span>
+                            <span class="text-red-600 font-semibold">{{ $p->status }}</span>
                         @else
-                            <span class="text-amber-600 font-medium font-semibold">{{ $p->status }}</span>
+                            <span class="text-amber-600 font-semibold">{{ $p->status }}</span>
                         @endif
                     </td>
                     @if($user->role === 'admin')
