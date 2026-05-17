@@ -12,7 +12,8 @@
                     <th class="p-3">Kode</th>
                     <th class="p-3">Nama</th>
                     <th class="p-3">Kategori</th>
-                    <th class="p-3">Jumlah</th>
+                    <th class="p-3">Jumlah (Stok)</th>
+                    <th class="p-3">Kondisi</th>
                     <th class="p-3">Status</th>
                     <th class="p-3">Aksi</th>
                 </tr>
@@ -20,11 +21,22 @@
             <tbody>
                 @foreach($barangs as $b)
                 <tr class="border-b border-gray-200">
-                    <td class="p-3">{{ $b->kode_barang }}</td>
-                    <td class="p-3">{{ $b->nama_barang }}</td>
-                    <td class="p-3">{{ $b->kategori }}</td>
-                    <td class="p-3">{{ $b->jumlah }}</td>
-                    <td class="p-3">{{ $b->status }}</td>
+                    <td class="p-3">{{ $b->kode }}</td>
+                    <td class="p-3">{{ $b->nama }}</td>
+                    
+                    <td class="p-3">{{ $b->kategori->nama ?? 'Tanpa Kategori' }}</td>
+                    
+                    <td class="p-3">{{ $b->stok_tersedia }} / {{ $b->stok }}</td>
+                    <td class="p-3 uppercase text-xs font-semibold">{{ str_replace('_', ' ', $b->kondisi) }}</td>
+                    
+                    <td class="p-3">
+                        @if($b->stok_tersedia > 0)
+                            <span class="text-green-600 font-bold">Tersedia</span>
+                        @else
+                            <span class="text-red-600 font-bold">Kosong</span>
+                        @endif
+                    </td>
+                    
                     <td class="p-3 flex gap-2">
                         @if($user->role === 'admin')
                             <a href="/barang/{{ $b->id }}/edit" class="text-blue-600">Edit</a>
@@ -34,7 +46,11 @@
                                 <button type="submit" class="text-red-600">Hapus</button>
                             </form>
                         @else
-                            <a href="/peminjaman/create?barang_id={{ $b->id }}" class="text-green-600 font-bold">Ajukan Pinjam</a>
+                            @if($b->stok_tersedia > 0)
+                                <a href="/peminjaman/create?barang_id={{ $b->id }}" class="text-green-600 font-bold">Ajukan Pinjam</a>
+                            @else
+                                <span class="text-gray-400">Tidak Bisa Dipinjam</span>
+                            @endif
                         @endif
                     </td>
                 </tr>

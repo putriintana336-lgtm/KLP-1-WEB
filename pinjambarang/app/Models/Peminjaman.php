@@ -8,13 +8,16 @@ class Peminjaman extends Model
 {
     protected $table = 'peminjaman';
 
+    // PERBAIKAN: Sesuaikan dengan nama kolom migration asli
     protected $fillable = [
+        'kode_pinjam',
         'user_id',
         'barang_id',
-        'tanggal_pinjam',
-        'tanggal_kembali',
-        'keperluan',
+        'jumlah',
+        'tgl_pinjam',
+        'tgl_kembali_rencana',
         'status',
+        'catatan',
     ];
 
     public function user()

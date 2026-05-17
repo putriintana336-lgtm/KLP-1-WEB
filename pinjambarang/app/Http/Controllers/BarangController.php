@@ -10,9 +10,9 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barangs = Barang::all();
+        // Mengambil data barang sekalian dengan data kategori relasinga
+        $barangs = Barang::with('kategori')->get();
         $user = User::find(session('user_id'));
-
         return view('barang.index', compact('barangs', 'user'));
     }
 
@@ -23,7 +23,14 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        Barang::create($request->all());
+        // PERBAIKAN: Petakan secara manual agar input HTML 'kode_barang' masuk ke kolom database 'kode'
+        Barang::create([
+            'kode'        => $request->kode_barang, // Menghubungkan input form ke kolom 'kode' di DB
+            'nama_barang' => $request->nama_barang,
+            'kategori_id' => $request->kategori_id,
+            'jumlah'      => $request->jumlah,
+            'status'      => $request->status,
+        ]);
 
         return redirect('/barang');
     }
@@ -38,7 +45,15 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         $barang = Barang::find($id);
-        $barang->update($request->all());
+        
+        // PERBAIKAN: Lakukan hal yang sama pada fungsi update agar saat diedit tidak eror
+        $barang->update([
+            'kode'        => $request->kode_barang,
+            'nama_barang' => $request->nama_barang,
+            'kategori_id' => $request->kategori_id,
+            'jumlah'      => $request->jumlah,
+            'status'      => $request->status,
+        ]);
 
         return redirect('/barang');
     }

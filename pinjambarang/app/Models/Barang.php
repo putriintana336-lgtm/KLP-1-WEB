@@ -7,14 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Barang extends Model
 {
     protected $table = 'barang';
-    
+
     protected $fillable = [
-        'nama_barang',
-        'kode_barang',
-        'kategori',
-        'jumlah',
-        'status',
+        'kategori_id', // Pastikan ini sudah sesuai database
+        'nama',
+        'kode',
+        'deskripsi',
+        'stok',
+        'stok_tersedia',
+        'kondisi',
+        'foto',
+        'aktif',
     ];
+
+    // TAMBAHKAN INI: Relasi ke model Kategori
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'kategori_id');
+    }
 
     public function peminjamans()
     {
