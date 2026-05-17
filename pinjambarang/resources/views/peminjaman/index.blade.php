@@ -1,5 +1,4 @@
 <x-layout>
-    <!-- Stat Cards -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;">
         <div style="background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%); padding: 24px; border: 1px solid #e0e7ff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
             <p style="color: #666; font-size: 12px; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px;">Total Peminjaman</p>
@@ -22,7 +21,6 @@
         </div>
     </div>
 
-    <!-- Daftar Peminjaman Section -->
     <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden;">
         <div style="padding: 24px; border-bottom: 1px solid #e5e7eb; background: #f9fafb;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -31,13 +29,16 @@
                     <a href="/peminjaman/create" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: 600; box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2); transition: all 0.3s ease;">+ Buat Pengajuan</a>
                 @endif
             </div>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" placeholder="Cari peminjaman..." style="flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: white; transition: all 0.3s ease;">
-                <button style="padding: 10px 14px; border: 1px solid #d1d5db; background: white; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; color: #666;">Cari</button>
-            </div>
+            
+            <form action="/peminjaman" method="GET" style="display: flex; gap: 10px; margin: 0;">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari peminjam atau barang..." style="flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: white; transition: all 0.3s ease;">
+                <button type="submit" style="padding: 10px 14px; border: 1px solid #d1d5db; background: white; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; color: #333; font-weight: 500;">Cari</button>
+                @if(request('search'))
+                    <a href="/peminjaman" style="padding: 10px 14px; border: 1px solid #ddd; background: #e5e7eb; color: #4b5563; border-radius: 8px; text-decoration: none; font-size: 14px; display: inline-block; font-weight: 500;">Reset</a>
+                @endif
+            </form>
         </div>
 
-        <!-- Table -->
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
             <thead>
                 <tr style="background: #f3f4f6; border-bottom: 2px solid #e5e7eb;">

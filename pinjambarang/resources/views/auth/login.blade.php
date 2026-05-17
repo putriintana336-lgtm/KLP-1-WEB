@@ -20,9 +20,9 @@
 
                 <div>
                     <input 
-                        type="text"
-                        name="username"
-                        placeholder="Username"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
                         required
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
                     >

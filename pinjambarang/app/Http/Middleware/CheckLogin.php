@@ -8,15 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckLogin
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        // PERBAIKAN: Jika session 'user_id' tidak ada, tendang kembali ke halaman login utama
+        // JIKA TIDAK ADA session 'user_id' (artinya belum login), TENDANG!
         if (!session()->has('user_id')) {
-            // Kita arahkan ke URL '/' karena form login kamu ada di halaman utama
-            return redirect('/'); 
+            return redirect('/login'); 
         }
 
         return $next($request);

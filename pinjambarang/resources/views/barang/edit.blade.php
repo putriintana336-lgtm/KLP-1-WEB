@@ -23,9 +23,15 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-bold text-gray-700 tracking-wide">Kategori ID</label>
-                    <input type="number" name="kategori_id" value="{{ $barang->kategori_id }}" required 
-                        class="border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-gray-700 bg-white shadow-sm" placeholder="ID Kategori">
+                    <label class="text-xs font-bold text-gray-700 tracking-wide">Kategori Barang</label>
+                    <select name="kategori_id" required 
+                        class="border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-gray-700 bg-white shadow-sm cursor-pointer">
+                        @foreach($kategori as $kat)
+                            <option value="{{ $kat->id }}" {{ $barang->kategori_id == $kat->id ? 'selected' : '' }}>
+                                {{ $kat->nama ?? $kat->nama_kategori ?? 'Kategori ' . $kat->id }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="flex flex-col gap-1.5">
@@ -37,8 +43,12 @@
 
             <div class="flex flex-col gap-1.5">
                 <label class="text-xs font-bold text-gray-700 tracking-wide">Kondisi Barang</label>
-                <input type="text" name="kondisi" value="{{ $barang->kondisi }}" required 
-                    class="border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-gray-700 bg-white shadow-sm" placeholder="Contoh: baik / rusak">
+                <select name="kondisi" required 
+                    class="border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-gray-700 bg-white shadow-sm cursor-pointer">
+                    <option value="baik" {{ $barang->kondisi === 'baik' ? 'selected' : '' }}>Baik</option>
+                    <option value="rusak_ringan" {{ $barang->kondisi === 'rusak_ringan' ? 'selected' : '' }}>Rusak Ringan</option>
+                    <option value="rusak_berat" {{ $barang->kondisi === 'rusak_berat' ? 'selected' : '' }}>Rusak Berat</option>
+                </select>
             </div>
 
             <div class="flex flex-col gap-1.5">

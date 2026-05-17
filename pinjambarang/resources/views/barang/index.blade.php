@@ -1,5 +1,4 @@
 <x-layout>
-    <!-- Stat Cards -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;">
         <div style="background: linear-gradient(135deg, #f0f4ff, white); padding: 20px; border: 1px solid #e0e7ff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
             <p style="color: #4f46e5; font-size: 11px; margin: 0 0 10px 0; font-weight: 600; letter-spacing: 0.5px;">TOTAL BARANG</p>
@@ -22,22 +21,24 @@
         </div>
     </div>
 
-    <!-- Daftar Barang Section -->
     <div style="background: white; border: 1px solid #ddd; border-radius: 8px;">
         <div style="padding: 20px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <h2 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">Daftar Barang</h2>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" placeholder="Cari barang..." style="flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: white; transition: all 0.3s ease;">
-                    <button style="padding: 10px 14px; border: 1px solid #d1d5db; background: white; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; color: #666;">Cari</button>
-                </div>
+                
+                <form action="/barang" method="GET" style="display: flex; gap: 10px; margin: 0;">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kode atau nama barang..." style="width: 250px; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: white;">
+                    <button type="submit" style="padding: 10px 14px; border: 1px solid #d1d5db; background: white; border-radius: 8px; cursor: pointer; color: #333; font-weight: 500;">Cari</button>
+                    @if(request('search'))
+                        <a href="/barang" style="padding: 10px 14px; border: 1px solid #ddd; background: #f3f4f6; color: #4b5563; border-radius: 8px; text-decoration: none; font-size: 14px; display: inline-block;">Reset</a>
+                    @endif
+                </form>
             </div>
             @if($user->role === 'admin')
                 <a href="/barang/create" style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500;">+ Tambah Barang</a>
             @endif
         </div>
 
-        <!-- Table -->
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
             <thead>
                 <tr style="background: #f9fafb; border-bottom: 1px solid #ddd;">
@@ -54,7 +55,7 @@
                 <tr style="border-bottom: 1px solid #eee; transition: background-color 0.2s ease;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor='transparent'">
                     <td style="padding: 12px;">{{ $b->kode }}</td>
                     <td style="padding: 12px;">{{ $b->nama }}</td>
-                    <td style="padding: 12px;">{{ $b->kategori->nama ?? 'Tanpa Kategori' }}</td>
+                    <td style="padding: 12px;">{{ $b->kategori->nama ?? $b->kategori->nama_kategori ?? 'Tanpa Kategori' }}</td>
                     <td style="padding: 12px;">{{ $b->stok_tersedia }} / {{ $b->stok }}</td>
                     <td style="padding: 12px;">
                         @if($b->stok_tersedia > 0)
@@ -66,7 +67,7 @@
                     <td style="padding: 12px;">
                         @if($user->role === 'admin')
                             <a href="/barang/{{ $b->id }}/edit" style="color: #2563eb; text-decoration: none; margin-right: 10px;">Edit</a>
-                            <form action="/barang/{{ $b->id }}" method="POST" style="display: inline;">
+                            <form action="/barang/{{ $b->id }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus barang ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" style="color: #dc2626; border: none; background: none; cursor: pointer; text-decoration: none;">Hapus</button>
@@ -84,7 +85,6 @@
             </tbody>
         </table>
 
-        <!-- Pagination -->
         <div style="padding: 15px; border-top: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #666;">
             <span>Menampilkan 1-10 dari {{ $barangs->count() }} barang</span>
             <div style="display: flex; gap: 5px;">
@@ -99,4 +99,3 @@
         </div>
     </div>
 </x-layout>
-
