@@ -8,20 +8,29 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('peminjamans', function (Blueprint $table) {
+        Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade');
-            $table->date('tanggal_pinjam');
-            $table->date('tanggal_kembali')->nullable();
-            $table->text('keperluan');
-            $table->enum('status', ['menunggu', 'disetujui', 'ditolak', 'dikembalikan'])->default('menunggu');
+            $table->string('kode_pinjam', 30)->unique();
+            $table->foreignId('user_id')->constrained('users')->onDelete('restrict');
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('restrict');
+            $table->unsignedInteger('jumlah')->default(1);
+            $table->date('tgl_pinjam');
+            $table->date('tgl_kembali_rencana');
+            $table->enum('status', [
+                'menunggu',
+                'disetujui',
+                'dipinjam',
+                'dikembalikan',
+                'terlambat',
+                'ditolak',
+            ])->default('menunggu');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('peminjamans');
+        Schema::dropIfExists('peminjaman');
     }
 };

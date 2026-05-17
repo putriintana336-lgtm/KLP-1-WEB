@@ -8,19 +8,23 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('barangs', function (Blueprint $table) {
+        Schema::create('barang', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_barang');
-            $table->string('kode_barang')->unique();
-            $table->string('kategori');
-            $table->integer('jumlah');
-            $table->string('status');
+            $table->foreignId('kategori_id')->constrained('kategori')->onDelete('restrict');
+            $table->string('nama');
+            $table->string('kode', 50)->unique();
+            $table->text('deskripsi')->nullable();
+            $table->unsignedInteger('stok')->default(1);
+            $table->unsignedInteger('stok_tersedia')->default(1);
+            $table->enum('kondisi', ['baik', 'rusak_ringan', 'rusak_berat'])->default('baik');
+            $table->string('foto')->nullable();
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('barangs');
+        Schema::dropIfExists('barang');
     }
 };
