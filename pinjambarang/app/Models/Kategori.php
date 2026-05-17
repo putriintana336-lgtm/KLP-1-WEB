@@ -10,7 +10,7 @@ class Kategori extends Model
     use HasFactory;
 
     // Menentukan nama tabel secara spesifik (sesuai di migration-mu: create_kategori_table)
-    protected $table = 'kategoris'; 
+    protected $table = 'kategori'; 
 
     // Mendaftarkan kolom apa saja yang boleh diisi massal
     protected $fillable = ['nama', 'slug', 'deskripsi'];
