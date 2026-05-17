@@ -12,6 +12,7 @@ class BarangController extends Controller
     {
         $barangs = Barang::all();
         $user = User::find(session('user_id'));
+
         return view('barang.index', compact('barangs', 'user'));
     }
 
@@ -23,12 +24,14 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         Barang::create($request->all());
+
         return redirect('/barang');
     }
 
     public function edit($id)
     {
         $barang = Barang::find($id);
+
         return view('barang.edit', compact('barang'));
     }
 
@@ -36,6 +39,7 @@ class BarangController extends Controller
     {
         $barang = Barang::find($id);
         $barang->update($request->all());
+
         return redirect('/barang');
     }
 
@@ -43,6 +47,7 @@ class BarangController extends Controller
     {
         $barang = Barang::find($id);
         $barang->delete();
+
         return redirect('/barang');
     }
 }
