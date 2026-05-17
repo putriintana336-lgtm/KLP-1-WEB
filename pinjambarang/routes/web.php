@@ -5,18 +5,28 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PeminjamanController;
 
+// =========================================================================
+// 1. RUTE PUBLIK / TAMU (Bisa diakses tanpa login & AMAN dari eror 401 / 405)
+// =========================================================================
 Route::get('/', [AuthController::class, 'showLogin']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login'); // Menangani GET /login (mencegah eror 405)
+Route::post('/login', [AuthController::class, 'login']);                  // Menangani POST /login saat klik submit
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
+// =========================================================================
+// 2. RUTE PROTEKSI (Harus Login terlebih dahulu)
+// =========================================================================
 Route::middleware(['check.login'])->group(function () {
     Route::get('/barang', [BarangController::class, 'index']);
     Route::get('/peminjaman', [PeminjamanController::class, 'index']);
     Route::get('/peminjaman/create', [PeminjamanController::class, 'create']);
     Route::post('/peminjaman', [PeminjamanController::class, 'store']);
 
+    // =====================================================================
+    // 3. RUTE KHUSUS ADMIN
+    // =====================================================================
     Route::middleware(['check.role:admin'])->group(function () {
         Route::get('/barang/create', [BarangController::class, 'create']);
         Route::post('/barang', [BarangController::class, 'store']);
