@@ -1,24 +1,24 @@
 <x-layout>
     <!-- Stat Cards -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;">
-        <div style="background: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-            <p style="color: #666; font-size: 12px; margin: 0 0 10px 0;">Total Barang</p>
-            <p style="font-size: 32px; font-weight: bold; margin: 0;">{{ $barangs->count() }}</p>
+        <div style="background: linear-gradient(135deg, #f0f4ff, white); padding: 20px; border: 1px solid #e0e7ff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <p style="color: #4f46e5; font-size: 11px; margin: 0 0 10px 0; font-weight: 600; letter-spacing: 0.5px;">TOTAL BARANG</p>
+            <p style="font-size: 36px; font-weight: 700; margin: 0; color: #1e293b;">{{ $barangs->count() }}</p>
         </div>
 
-        <div style="background: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-            <p style="color: #666; font-size: 12px; margin: 0 0 10px 0;">Barang Tersedia</p>
-            <p style="font-size: 32px; font-weight: bold; margin: 0; color: #22c55e;">{{ $barangs->where('stok_tersedia', '>', 0)->count() }}</p>
+        <div style="background: linear-gradient(135deg, #f0fdf4, white); padding: 20px; border: 1px solid #bbf7d0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <p style="color: #22c55e; font-size: 11px; margin: 0 0 10px 0; font-weight: 600; letter-spacing: 0.5px;">BARANG TERSEDIA</p>
+            <p style="font-size: 36px; font-weight: 700; margin: 0; color: #166534;">{{ $barangs->where('stok_tersedia', '>', 0)->count() }}</p>
         </div>
 
-        <div style="background: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-            <p style="color: #666; font-size: 12px; margin: 0 0 10px 0;">Barang Dipinjam</p>
-            <p style="font-size: 32px; font-weight: bold; margin: 0; color: #ef4444;">{{ $barangs->sum(fn($b) => $b->stok - $b->stok_tersedia) }}</p>
+        <div style="background: linear-gradient(135deg, #fef2f2, white); padding: 20px; border: 1px solid #fecaca; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <p style="color: #ef4444; font-size: 11px; margin: 0 0 10px 0; font-weight: 600; letter-spacing: 0.5px;">BARANG DIPINJAM</p>
+            <p style="font-size: 36px; font-weight: 700; margin: 0; color: #991b1b;">{{ $barangs->sum(fn($b) => $b->stok - $b->stok_tersedia) }}</p>
         </div>
 
-        <div style="background: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-            <p style="color: #666; font-size: 12px; margin: 0 0 10px 0;">Peminjaman Baru</p>
-            <p style="font-size: 32px; font-weight: bold; margin: 0;">0</p>
+        <div style="background: linear-gradient(135deg, #fdf2f8, white); padding: 20px; border: 1px solid #f5d8eb; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <p style="color: #d946ef; font-size: 11px; margin: 0 0 10px 0; font-weight: 600; letter-spacing: 0.5px;">STOK KOSONG</p>
+            <p style="font-size: 36px; font-weight: 700; margin: 0; color: #831843;">{{ $barangs->where('stok_tersedia', '<=', 0)->count() }}</p>
         </div>
     </div>
 
@@ -27,9 +27,9 @@
         <div style="padding: 20px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <h2 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">Daftar Barang</h2>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <input type="text" placeholder="Cari barang..." style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
-                    <button style="padding: 8px 12px; border: 1px solid #ddd; background: white; border-radius: 4px; cursor: pointer;">🔍</button>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Cari barang..." style="flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: white; transition: all 0.3s ease;">
+                    <button style="padding: 10px 14px; border: 1px solid #d1d5db; background: white; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; color: #666;">Cari</button>
                 </div>
             </div>
             @if($user->role === 'admin')
@@ -51,7 +51,7 @@
             </thead>
             <tbody>
                 @foreach($barangs as $b)
-                <tr style="border-bottom: 1px solid #eee;">
+                <tr style="border-bottom: 1px solid #eee; transition: background-color 0.2s ease;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor='transparent'">
                     <td style="padding: 12px;">{{ $b->kode }}</td>
                     <td style="padding: 12px;">{{ $b->nama }}</td>
                     <td style="padding: 12px;">{{ $b->kategori->nama ?? 'Tanpa Kategori' }}</td>
@@ -65,11 +65,11 @@
                     </td>
                     <td style="padding: 12px;">
                         @if($user->role === 'admin')
-                            <a href="/barang/{{ $b->id }}/edit" style="color: #2563eb; text-decoration: none; margin-right: 10px;">✏️ Edit</a>
+                            <a href="/barang/{{ $b->id }}/edit" style="color: #2563eb; text-decoration: none; margin-right: 10px;">Edit</a>
                             <form action="/barang/{{ $b->id }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" style="color: #dc2626; border: none; background: none; cursor: pointer; text-decoration: none;">🗑️ Hapus</button>
+                                <button type="submit" style="color: #dc2626; border: none; background: none; cursor: pointer; text-decoration: none;">Hapus</button>
                             </form>
                         @else
                             @if($b->stok_tersedia > 0)
